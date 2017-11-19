@@ -1,14 +1,7 @@
 package co.kr.ucs.spring.dao;
-
-import java.sql.ResultSet;
-import java.sql.SQLException;
-
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
-
 import org.springframework.stereotype.Repository;
-
-
 import co.kr.ucs.spring.vo.UserVO;
 
 @Repository
@@ -17,9 +10,13 @@ public class SignDao {
 	@Autowired
 	private SqlSession sqlSession;
 	
-	public int SignUp(UserVO UserVO) throws ClassNotFoundException {
-		String InsertSql = "INSERT INTO CM_USER(USER_ID,USER_PW,USER_NM,EMAIL)values(?,?,?,?)";
-		return sqlSession.insert("sign.signInsert", UserVO);
+	public int SignUpAc(UserVO UserVo) throws ClassNotFoundException {
+		return sqlSession.insert("sign.signUpAction", UserVo);
+	}
+
+	public UserVO SignInAc(UserVO UserVo) {
+		
+		return sqlSession.selectOne("sign.signInAction", UserVo);
 	}
 	
 //

@@ -1,4 +1,6 @@
 package co.kr.ucs.spring.service;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -12,9 +14,14 @@ public class SignService {
 	private SignDao signDao;
 
 
-	public int SignUpok(UserVO UserVO) throws Exception {
+	public int SignUpAc(UserVO UserVo) throws Exception {
 
-		return signDao.SignUp(UserVO);
+		return signDao.SignUpAc(UserVo);
+	}
+
+	public UserVO SignInAc(UserVO userVo) {
+		
+		return signDao.SignInAc(userVo);
 	}
 	
 

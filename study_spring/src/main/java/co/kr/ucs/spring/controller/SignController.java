@@ -1,9 +1,6 @@
 package co.kr.ucs.spring.controller;
 
-import java.text.DateFormat;
-import java.util.Date;
 import java.util.Locale;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,20 +32,29 @@ public class SignController {
 		
 		return "login/signUp";
 	}
-	@RequestMapping(value = "/sign/signUpok.do", method = RequestMethod.GET)
+	@RequestMapping(value = "/sign/signUpAC.do", method = RequestMethod.POST)
 	@ResponseBody
-	public String signUpok(Locale locale, UserVO UserVo) throws Exception{
+	public int signUpAc(Locale locale, UserVO UserVo) throws Exception{
 		
+		int flag = signService.SignUpAc(UserVo);
 		
-		return "";
+		return flag;
 	}
 	
 	@RequestMapping(value = "/sign/signIn.do", method = RequestMethod.GET)
 	public String signIn(Locale locale, Model model) throws Exception{
 		
-		UserVO UserVo = new UserVO();
-		
 		return "login/signIn";
+	}
+	
+	@RequestMapping(value = "/sign/signInAc.do", method = RequestMethod.POST)
+	@ResponseBody
+	public UserVO signInAc(Locale locale, Model model, UserVO UserVo) throws Exception{
+		
+		UserVO vo = signService.SignInAc(UserVo);
+		System.out.println("list:"+vo);
+		
+		return vo;
 	}
 	
 }

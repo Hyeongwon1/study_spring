@@ -32,13 +32,13 @@
 			var param = frm.serialize();
 			
 			$.ajax({
-			    url : "/sign/signIn.do",
+			    url : "/sign/signInAc.do",
 			    dataType: "json",
 			    type: "POST",
 			    data : param,
 			    success: function(data)
 			    {
-			    	console.log(data.success)
+			    	console.log(data)
 			    	
 			    	if (data.success == 1 ) {
 			    		
