@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="board">
+	 <select id="boardList" resultType="co.kr.ucs.spring.vo.BoardVO" parameterType="hashmap">
+		 	SELECT*
+		 		FROM
+				( 
+				SELECT 
+					ROWNUM RNUM 
+					,SEQ
+					,TITLE
+					,CONTENTS
+					,REG_ID 
+					,REG_DATE
+					,MOD_DATE
+					,B.USER_NM AS MOD_ID 
+				FROM
+				(
+				SELECT * FROM BOARD C 
+			<if test="searchWord !=null and searchWord !='' ">
+				<choose>
+					<when test="searchKey==TITLE">
+						WHERE TITLE LIKE #{SearchWord} ORDER BY SEQ DESC) A 
+					</when>
+					<when test="searchKey==REG_ID">
+						WHERE REG_ID LIKE #{SearchWord} ORDER BY SEQ DESC) A 
+					</when>
+				</choose>
+			</if>
+			<if test="searchWord !=null and searchWord !='' ">
+				ORDER BY SEQ DESC) A
+			</if>
+				LEFT
+				JOIN CM_USER B 
+				ON B.USER_ID = A.MOD_ID )
+				WHERE RNUM BETWEEN #{startRow} and #{endRow}
+	</select>
+	
+<!-- 	<select id="getTotalRows" resultType="Integer" parameterType="co.kr.ucs.spring.vo.SearchVO" > -->
+					<!-- 위와같이 해서 VO값을 받아서 넣고싶은데 자꾸 오류가남 위와같으 받으려면 어떻게 해야 할까요?? -->
+	 <select id="getTotalRows" resultType="Integer" parameterType="hashmap" >
+		 	SELECT COUNT(*) TOTALROWS
+		 		FROM
+				( 
+				SELECT 
+					ROWNUM RNUM 
+					,SEQ
+					,TITLE
+					,CONTENTS
+					,REG_ID 
+					,REG_DATE
+					,MOD_DATE
+					,B.USER_NM AS MOD_ID 
+				FROM
+				(
+				SELECT * FROM BOARD C 
+			<if test="searchWord !=null and searchWord !='' ">
+				<choose>
+					<when test="searchKey == TITLE">
+						WHERE TITLE LIKE #{searchWord} ORDER BY SEQ DESC) A 
+					</when>
+					<when test="searchKey == REG_ID">
+						WHERE REG_ID LIKE #{searchWord} ORDER BY SEQ DESC) A 
+					</when>
+				</choose>
+			</if>
+			<if test="searchWord !=null and searchWord !='' ">
+				ORDER BY SEQ DESC) A
+			</if>
+				LEFT
+				JOIN CM_USER B 
+				ON B.USER_ID = A.MOD_ID )
+
+	</select>
+	<!-- 	파라미터타입을 vo로 받을시에는 vo명과 완전 동일하게 줘야한다 jsp페이지의 id값도 마찬가지고 		-->
+	 <select id="boardWrite" parameterType="co.kr.ucs.spring.vo.BoardVO" >
+			INSERT INTO 
+			BOARD
+			(SEQ
+			,TITLE
+			,CONTENTS
+			,REG_ID
+			,REG_DATE
+			,MOD_ID
+			,MOD_DATE
+			)values
+			((SELECT(MAX(SEQ)+1)FROM BOARD)
+			,#{title}
+			,#{content}
+			,#{reg_id}
+			,SYSDATE
+			,#{reg_id}
+			,SYSDATE)
+	</select>
+	
+<!-- 	<select id="boardRead" resultType="co.kr.ucs.spring.vo.BoardVO"  parameterType="hashmap"> -->
+	<select id="boardRead" resultType="co.kr.ucs.spring.vo.BoardVO"  parameterType="Integer">
+			SELECT * FROM BOARD WHERE SEQ=#{seq}
+	</select>
+	
+</mapper>

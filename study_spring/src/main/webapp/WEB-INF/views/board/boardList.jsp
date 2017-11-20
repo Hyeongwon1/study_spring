@@ -64,17 +64,8 @@ $(document).ready(function() {
 });	
 	
 	function search(cPage) {
-	
 		console.log(cPage)
 		var cPage ;
-<%-- 		var aa = '<%= request.getParameter("cpage")%>'; --%>
-// 		console.log(aa)
-// 		if (aa != null) {
-// 			cPage = aa
-// 		}else{
-// 			cPage = 1
-// 		}
-		
 		console.log(cPage)
 		var param = {
 	
@@ -91,23 +82,17 @@ $(document).ready(function() {
 			success : function(data) {
 	              console.log(data)
 	              console.log(data.list)
-	              console.log(data.totlaRows)
+	              console.log(data.totalRows)
 	              console.log(data.cPage)
 	              
-	             var totalRows = data.totlaRows
+	             var totalRows = data.totalRows
 	             var cPage = data.cPage
 	             
 	             listfn(data.list);
 	             console.log("totalRows")
 	             console.log(totalRows)
 	             pagerfn(totalRows,cPage);
-			
-				
-			   
-							
-			
 	// 			alert("셀렉완료");
-				
 				},
 				error : function(errorThrown) {
 					alert("실패");
@@ -126,7 +111,7 @@ function listfn(data) {
 				"<tr><td>"
 				+ item.seq 
 				+ "</td><td>" 
-				+ "<a href ="+ "/jsp/board/boardRead.jsp?seq=" + item.seq + ">"+ item.title + "</a>" 
+				+ "<a href ="+ "/board/boardRead.do?seq=" + item.seq + ">"+ item.title + "</a>" 
 				+ "</td><td>"
 				+ item.reg_id
 				+ "</td><td>" 
@@ -214,7 +199,7 @@ function pagerfn(data,cppage) {
 function fn_logout() {
 	
 		
-	location.href='/jsp/login/signIn.jsp'
+	location.href='/sign/signIn.do'
 }
 
 
@@ -236,7 +221,7 @@ function fn_logout() {
 						</select> 
 						<input type="text" name="searchWord" id="searchWord" value="" />
 						<button id="searchbtn" type="submit" value="검색" >검색</button>
-						<button type="button"  onclick="location.href='/jsp/board/boardWrite.jsp'">글쓰기</button>
+						<button type="button"  onclick="location.href='/board/boardWrite.do'">글쓰기</button>
 					</td>
 				</tr>
 			</table>

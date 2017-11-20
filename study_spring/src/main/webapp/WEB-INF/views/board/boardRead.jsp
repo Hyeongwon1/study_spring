@@ -9,37 +9,36 @@
 <head>
 <meta charset="UTF-8">
 <title>UPDATE PAGE</title>
-<script src="../js/stringformat-1.11.min.js"></script>
 <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <script>
-$(document).ready(function(){
+// $(document).ready(function(){
 	
-	var seq = '<%= request.getParameter("seq")%>';
+<%-- 	var seq = '<%= request.getParameter("seq")%>'; --%>
 
-	$.ajax({
-		url : "/board/boardRead.do?seq="+seq,
-		type : "POST",
-		contentType:'application/json;charset=utf-8',
-		dataType : "json",
-		success : function(data){
-			console.log(data)
-			console.log(data.brb[0].seq)
+// 	$.ajax({
+// 		url : "/board/boardRead.do?seq="+seq,
+// 		type : "POST",
+// 		contentType:'application/json;charset=utf-8',
+// 		dataType : "json",
+// 		success : function(data){
+// 			console.log(data)
+// 			console.log(data.list[0].seq)
 				
-				$('#seq').html(data.brb[0].seq);
-				$('#reg_id').html(data.brb[0].reg_id);
-				$('#reg_date').html(data.brb[0].reg_date);
-				$('#title').html(data.brb[0].title);
-				$('#contents').html(data.brb[0].contents);
+// 				$('#seq').html(data.list[0].seq);
+// 				$('#reg_id').html(data.list[0].reg_id);
+// 				$('#reg_date').html(data.list[0].reg_date);
+// 				$('#title').html(data.list[0].title);
+// 				$('#contents').html(data.list[0].contents);
 				
-			},
-		    error: function (errorThrown)
-		    {
-		    console.log("에러");
-		    }
-		});
+// 			},
+// 		    error: function (errorThrown)
+// 		    {
+// 		    console.log("에러");
+// 		    }
+// 		});
 	
 	
-});
+// });
 </script>
 </head>
 <body>
@@ -51,22 +50,22 @@ $(document).ready(function(){
 		<form id="update" >
 			<table border="1" align="center">
 				<tr>
-				<td colspan="5" id="seq"></td>
+				<td colspan="5" id="seq">${list.seq}</td>
 				</tr>
 				<tr>
 					<td><label>작성자</label></td>
-					<td id="reg_id"></td>
+					<td id="reg_id">${list.reg_id}</td>
 					
 					<td><label>작성일</label></td>
-					<td id="reg_date"></td>
+					<td id="reg_date">${list.reg_date}</td>
 				</tr>
 				<tr>
 					<td><label>제목</label></td>
-					<td colspan="3" id="title"></td>
+					<td colspan="3" id="title">${list.title}</td>
 				</tr>
 				<tr>
 					<td colspan=""><label>내용</label></td>
-					<td colspan="3"><textarea name="content" rows="30" cols="50" id="contents"></textarea></td>
+					<td colspan="3"><textarea name="content" rows="30" cols="50" id="contents">${list.contents}</textarea></td>
 				</tr>
 			</table>
 		</form>

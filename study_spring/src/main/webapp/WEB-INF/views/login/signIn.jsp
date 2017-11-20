@@ -43,7 +43,7 @@
 			    	if (data.success == 1 ) {
 			    		
 						console.log("loginsuc")
-						location.href = "/jsp/board/boardList.jsp";
+						location.href = "/board/boardListf.do";
 				    	
 					}else if(data.success == 0 ) {
 						

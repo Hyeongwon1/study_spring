@@ -19,7 +19,7 @@
 	    )
 	</select>
 	
-	 <select id="signInAction" parameterType="co.kr.ucs.spring.vo.UserVO">
+	 <select id="signInAction" resultType="co.kr.ucs.spring.vo.UserVO" parameterType="co.kr.ucs.spring.vo.UserVO">
 		
 		SELECT * 
 		FROM CM_USER 

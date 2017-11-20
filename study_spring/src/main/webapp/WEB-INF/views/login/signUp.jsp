@@ -53,30 +53,23 @@
 // 		        return false;
 // 		  	}				 
 					
-					
-			
 			var frm = $('.logupfrom :input');
 			var param = frm.serialize();
 			
 			$.ajax({
-			    url : "/sign/signUp.do",
+			    url : "/sign/signUpAc.do",
 			    dataType: "json",
 			    type: "POST",
 			    data : param,
 			    success: function(data)
 			    {
 			    	console.log(data.succes)
-			    	
-			    	if (data.success == 1) {
-			    		
+			    	if (data.success == "Y") {
 						alert("가입성공");
 						console.log("loginsuc")
-						location.href = "/jsp/login/signIn.jsp";
-				    	
+						location.href = "/sign/signIn.do";
 					}else{
-				    	
 				    	alert("실패");
-						
 					}
 			    },
 			    error: function (errorThrown)
@@ -326,7 +319,7 @@
 				
 				<div align="center">
 					 <input type="submit" id="submit" value="가입">
-					 <input type="button" onclick="location.href='/jsp/login/signIn.jsp'" value="취소" />
+					 <input type="button" onclick="location.href='/sign/signIn.do'" value="취소" />
 				</div>
 	</section>
 

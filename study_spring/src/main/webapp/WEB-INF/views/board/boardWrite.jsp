@@ -16,7 +16,7 @@ $(document).ready(function(){
 		var param = frm.serialize();
 		
 		$.ajax({
-		    url : "/board/BoardWrite.do",
+		    url : "/board/boardWriteAc.do",
 		    dataType: "json",
 		    type: "POST",
 		    data : param,
@@ -24,13 +24,13 @@ $(document).ready(function(){
 		    {
 		    	console.log(data.success)
 		    	
-		    	if (data.success == 1) {
+		    	if (data.success == "Y") {
 		    		
 					alert("작성성공");
 					console.log("loginsuc")
-					location.href = "/jsp/board/boardList.jsp?";
+					location.href = "/board/boardList.do";
 			    	
-				}else if(data.success == 0){
+				}else if(data.success == "N"){
 			    	
 			    	alert("실패");
 					
@@ -62,11 +62,11 @@ $(document).ready(function(){
 			<table border="1">
 				<tr>
 					<td><label>제목</label></td>
-					<td><input type="text" name="title" value=""></td>
+					<td><input type="text" name="title" id="title" value=""></td>
 				</tr>
 				<tr>
 					<td><label>내용</label></td>
-					<td><textarea name="contents" rows="30" cols="50" ></textarea></td>
+					<td><textarea name="contents" id="contents" rows="30" cols="50" ></textarea></td>
 				</tr>
 			</table>
 		</form>

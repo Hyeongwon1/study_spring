@@ -1,6 +1,10 @@
 package co.kr.ucs.spring.controller;
 
+import java.util.HashMap;
 import java.util.Locale;
+import java.util.Map;
+
+import javax.servlet.http.HttpSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,6 +12,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import co.kr.ucs.spring.service.SignService;
 import co.kr.ucs.spring.vo.UserVO;
@@ -32,13 +37,18 @@ public class SignController {
 		
 		return "login/signUp";
 	}
-	@RequestMapping(value = "/sign/signUpAC.do", method = RequestMethod.POST)
+	
+	@RequestMapping(value = "/sign/signUpAc.do", method = RequestMethod.POST)
 	@ResponseBody
-	public int signUpAc(Locale locale, UserVO UserVo) throws Exception{
+	public Map<String, String> signUpAc(Locale locale, UserVO UserVo) throws Exception{
 		
 		int flag = signService.SignUpAc(UserVo);
 		
-		return flag;
+		Map<String, String> map = new HashMap<String, String>();
+		
+		map.put("success", (flag > 0)?"Y":"N");
+		
+		return map;
 	}
 	
 	@RequestMapping(value = "/sign/signIn.do", method = RequestMethod.GET)
@@ -49,12 +59,22 @@ public class SignController {
 	
 	@RequestMapping(value = "/sign/signInAc.do", method = RequestMethod.POST)
 	@ResponseBody
-	public UserVO signInAc(Locale locale, Model model, UserVO UserVo) throws Exception{
-		
+	public Map<String, String> signInAc(HttpSession session,Locale locale, Model model, UserVO UserVo) throws Exception{
+	
 		UserVO vo = signService.SignInAc(UserVo);
 		System.out.println("list:"+vo);
+		 
+		Map<String, String> map = new HashMap<String, String>();
 		
-		return vo;
+			
+		if(vo!=null){
+			session.setAttribute("loginId",vo.getUser_id());
+			map.put("success", "1");
+		}else {
+			map.put("success", "0");
+		}
+		
+		return map;
 	}
 	
 }
