@@ -29,7 +29,7 @@
 	</bean>
 
 	<!--1. pom.xml commons-dbcp.jar -->
-	<bean id="dataSourceSpied" class="org.apache.commons.dbcp.BasicDataSource"
+	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource"
 		destroy-method="close">
 		<property name="driverClassName" value="${oracle.driverClass}" />
 		<property name="url" value="${oracle.url}" />
@@ -37,15 +37,6 @@
 		<property name="password" value="${oracle.password}" />
 	</bean>
 
-	<bean id="dataSource" class="net.sf.log4jdbc.Log4jdbcProxyDataSource">
-		<constructor-arg ref="dataSourceSpied" />
-		<property name="logFormatter">
-			<bean class="net.sf.log4jdbc.tools.Log4JdbcCustomFormatter">
-				<property name="loggingType" value="MULTI_LINE" />
-				<property name="sqlPrefix" value="SQL         :  " />
-			</bean>
-		</property>
-	</bean>
 
 	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
 		<property name="dataSource" ref="dataSource" />

@@ -88,7 +88,7 @@
 			)values
 			((SELECT(MAX(SEQ)+1)FROM BOARD)
 			,#{title}
-			,#{content}
+			,#{contents}
 			,#{reg_id}
 			,SYSDATE
 			,#{reg_id}

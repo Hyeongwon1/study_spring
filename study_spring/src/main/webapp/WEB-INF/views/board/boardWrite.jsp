@@ -27,8 +27,7 @@ $(document).ready(function(){
 		    	if (data.success == "Y") {
 		    		
 					alert("작성성공");
-					console.log("loginsuc")
-					location.href = "/board/boardList.do";
+					location.href = "/board/boardListf.do";
 			    	
 				}else if(data.success == "N"){
 			    	

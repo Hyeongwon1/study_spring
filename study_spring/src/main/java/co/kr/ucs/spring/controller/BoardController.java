@@ -37,6 +37,7 @@ public class BoardController {
 	
 	@RequestMapping(value = "/board/boardListf.do", method = RequestMethod.GET)
 	public String boardListfirst(Locale locale, Model model) throws Exception{
+		logger.info("boardListf");
 		
 		return "board/boardList";
 	}

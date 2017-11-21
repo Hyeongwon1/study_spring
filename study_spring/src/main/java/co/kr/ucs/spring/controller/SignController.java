@@ -53,6 +53,7 @@ public class SignController {
 	
 	@RequestMapping(value = "/sign/signIn.do", method = RequestMethod.GET)
 	public String signIn(Locale locale, Model model) throws Exception{
+		logger.info("signIn");
 		
 		return "login/signIn";
 	}
