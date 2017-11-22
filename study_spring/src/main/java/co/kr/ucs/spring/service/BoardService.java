@@ -1,5 +1,6 @@
 package co.kr.ucs.spring.service;
 
+import java.util.HashMap;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -15,15 +16,15 @@ public class BoardService {
 	BoardDao boardDao;
 
 
-	public List<BoardVO> BoardList(SearchVO searchVo){
+	public List<HashMap<String, Object>> BoardList(HashMap<String, Object> param){
 
-		return boardDao.BoardList(searchVo);
+		return boardDao.BoardList(param);
 	}
 
 
-	public int getTotalRows(SearchVO searchVo) {
+	public int getTotalRows(HashMap<String, Object> param) {
 		
-		return boardDao.getTotalRows(searchVo);
+		return boardDao.getTotalRows(param);
 	}
 
 

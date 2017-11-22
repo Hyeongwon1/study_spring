@@ -8,7 +8,6 @@ import org.springframework.stereotype.Repository;
 
 import co.kr.ucs.spring.vo.BoardVO;
 import co.kr.ucs.spring.vo.SearchVO;
-import co.kr.ucs.spring.vo.UserVO;
 
 @Repository
 public class BoardDao {
@@ -16,32 +15,33 @@ public class BoardDao {
 	@Autowired
 	SqlSession sqlSession;
 	
-	public List<BoardVO> BoardList(SearchVO searchVo) {
-		// TODO Auto-generated method stub
-		int pageBlock = 10;
-		int startRow  = (searchVo.getCpage() - 1) * pageBlock + 1;
-		int endRow    = startRow  + pageBlock - 1;
-		
-        HashMap <Object,Object> map = new HashMap<Object, Object>();
-        map.put("searchWord", "%" + searchVo.getSearchWord() + "%");
-		map.put("searchKey" ,              searchVo.getSearchKey());
-        map.put("startRow"  ,               startRow);
-		map.put("endRow"    ,                 endRow);
-		
-		return sqlSession.selectList("board.boardList", map);
+	public List<HashMap<String, Object>> BoardList(HashMap<String, Object> param) {
+//		int pageBlock = 10;
+//		int startRow  = (searchVo.getCpage() - 1) * pageBlock + 1;
+//		int endRow    = startRow  + pageBlock - 1;
+//		
+//        HashMap <String,Object> map = new HashMap<String, Object>();
+//        System.out.println("111111111111111110"+searchVo.getSearchWord());
+//        System.out.println("1111111111111123233"+searchVo.getSearchKey());
+//        map.put("searchWord", 			searchVo.getSearchWord());
+//		map.put("searchKey" ,              searchVo.getSearchKey());
+//        map.put("startRow"  ,               startRow);
+//		map.put("endRow"    ,                 endRow);
+		System.out.println("paraml;ll;l;l;l;l;"+param);
+//		
+		return sqlSession.selectList("board.boardList", param);
 	}
 
-	public int getTotalRows(SearchVO searchVo) {
+	public int getTotalRows(HashMap<String, Object> param) {
 		
-        HashMap <Object,Object> map = new HashMap<Object, Object>();
-        map.put("searchWord", "%" + searchVo.getSearchWord() + "%");
-		map.put("searchKey" ,              searchVo.getSearchKey());
+//		HashMap <String,Object> map1 = new HashMap<String, Object>();
+//        map1.put("searchWord", param.getSearchWord());
+//		map1.put("searchKey" ,              param.getSearchKey());
         
-		return sqlSession.selectOne("board.getTotalRows", map);
+		return sqlSession.selectOne("board.getTotalRows", param);
 	}
 
 	public int BoardWrite(BoardVO boardVo) {
-		// TODO Auto-generated method stub
 		return sqlSession.insert("board.boardWrite", boardVo);
 	}
 

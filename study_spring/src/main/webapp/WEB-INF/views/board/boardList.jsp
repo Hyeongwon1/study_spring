@@ -56,6 +56,7 @@ response.setCharacterEncoding("UTF-8");
 <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <script type="text/javascript">
 $(document).ready(function() {
+	
 	search(1);
 	$('#searchbtn').on('click', function(){
 		search(1);
@@ -67,6 +68,8 @@ $(document).ready(function() {
 		console.log(cPage)
 		var cPage ;
 		console.log(cPage)
+		console.log($("#searchKey").val())
+		console.log($("#searchWord").val())
 		var param = {
 	
 			'searchKey'  : $("#searchKey").val(),
@@ -76,8 +79,8 @@ $(document).ready(function() {
 	
 		$.ajax({
 			url : "/board/boardList.do" ,
-			dataType : "json",
 			data:  param,
+			dataType : "json",
 			type : "POST",
 			success : function(data) {
 	              console.log(data)
@@ -216,11 +219,11 @@ function fn_logout() {
 				<tr>
 					<td colspan="5">
 						<select name="searchKey" id="searchKey">
-							<option value="title">제목</option>
-							<option value="name">이름</option>
+							<option value="TITLE">제목</option>
+							<option value="MOD_ID">아이디</option>
 						</select> 
 						<input type="text" name="searchWord" id="searchWord" value="" />
-						<button id="searchbtn" type="submit" value="검색" >검색</button>
+						<button id="searchbtn" value="검색" >검색</button>
 						<button type="button"  onclick="location.href='/board/boardWrite.do'">글쓰기</button>
 					</td>
 				</tr>

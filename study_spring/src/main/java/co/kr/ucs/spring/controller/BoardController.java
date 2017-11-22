@@ -11,6 +11,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -44,32 +45,35 @@ public class BoardController {
 	
 	@RequestMapping(value = "/board/boardList.do", method = RequestMethod.POST)
 	@ResponseBody
-	public HashMap<String, Object> boardList(Locale locale, Model model
-			,@RequestParam("cpage")String cupage
-			,@RequestParam("searchKey")String searchKey
-			,@RequestParam("searchWord")String searchWord) throws Exception{
+//	public HashMap<String, Object> boardList(Locale locale, Model model, @RequestBody HashMap<String, Object> param) throws Exception{
+//	파라미터를 파람으로 싹다 받아서 넘기고 싶은데 Content type 'application/x-www-form-urlencoded;charset=UTF-8' not supported 오류....
+	public HashMap<String, Object> boardList(Locale locale, Model model, HashMap<String, Object> param,
+			@RequestParam("cpage")int cPage,
+			@RequestParam("searchKey")String searchKey,
+			@RequestParam("searchWord")String searchWord) throws Exception{
 		
-		SearchVO SearchVo = new SearchVO();
 		
-		System.out.println("searchKey:"+searchKey);
-		System.out.println("searchWord:"+searchWord);
+		int pageBlock = 10;
+		int startRow  = (cPage - 1) * pageBlock + 1;
+		int endRow    = startRow  + pageBlock - 1;
 		
-		String cpage = "1";
-		if(cupage != null){
-			cpage = cupage;
-		}
-		SearchVo.setSearchKey(searchKey);
-		SearchVo.setSearchWord(searchWord);
-		SearchVo.setCpage(Integer.parseInt(cpage));
+		param.put("searchKey", searchKey);
+		param.put("searchWord", "%" +searchWord+ "%");
+		param.put("startRow", startRow);
+		param.put("endRow", endRow);
+		
+		List<HashMap<String, Object>> list	= boardService.BoardList(param);
+		int totalRows		= boardService.getTotalRows(param);
+		
+		System.out.println("totalRows:"+totalRows);
+		
 		
 		HashMap<String, Object> map = new HashMap<String, Object>();
-		List<BoardVO> list = boardService.BoardList(SearchVo);
-		int totalRows = boardService.getTotalRows(SearchVo);
-		System.out.println("totalRows:"+totalRows);
 		map.put("list", list);
 		map.put("totalRows", totalRows);
-		System.out.println("cpage:"+SearchVo.getCpage());
-		map.put("cPage", cpage);
+		System.out.println("cpage:"+cPage);
+		map.put("cPage", cPage);
+		
 
 		return map;
 	}

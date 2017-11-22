@@ -3,7 +3,8 @@
      <appender name="console" class="ch.qos.logback.core.ConsoleAppender">
         <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
             <pattern>
-                ▶  %-5level %d{HH:mm:ss.SSS} [%thread] %logger[%method:%line] - %msg%n
+<!--                 ▶  %-5level %d{HH:mm:ss.SSS} [%thread] %logger[%method:%line] - %msg%n -->
+<!--               %d{yyyy-MM-dd HH:mm:ss} %-5level %logger{36} - %msg%n -->
             </pattern>
         </encoder>
     </appender>
@@ -11,7 +12,10 @@
     <appender name="consoleForLoginInterceptor" class="ch.qos.logback.core.ConsoleAppender">
         <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
             <pattern>
-                ▷  %-5level %d{HH:mm:ss} %logger[%method:%line] - %msg%n
+<!--             로그백 패턴 설정.. 지워도 나오는이유...?? -->
+<!--                 ▷  %-5level %d{HH:mm:ss} %logger[%method:%line] - %msg%n -->
+<!--               %d{yyyy-MM-dd HH:mm:ss} %-5level %logger{36} - %msg%n -->
+                
             </pattern>
         </encoder>
     </appender>
@@ -19,4 +23,5 @@
     <root level="info">
         <appender-ref ref="console"/>
     </root>
+    
 </configuration>

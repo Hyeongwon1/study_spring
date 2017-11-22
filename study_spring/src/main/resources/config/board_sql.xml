@@ -3,7 +3,14 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="board">
-	 <select id="boardList" resultType="co.kr.ucs.spring.vo.BoardVO" parameterType="hashmap">
+	 <select id="boardList" resultType="co.kr.ucs.spring.vo.BoardVO" >
+<!-- 	 받는 파라미터타입을 잘 설정을 해주아야함...? 대소문자 구분 하나??? =상관없는듯.. -->
+<!-- 	 parameterType은..  vo 로 하면 순서데로 들어가는듯..?? map으로 받아야 편할듯..?  없어도 상관 없는듯.... -->
+
+<!-- 	 resultType에 따라 뿌려주는 값의 대소문자구분 하는듯. map으로 했을시 대문자 vo타입으로 했을시 vo타입에 적힌대로. -->
+
+<!-- 				동적쿼리 작동시 오류는  비교문자열에 ''을 안쳐준것.. 그리고 조건문을 중복해서 사용한것...그게 끝.. -->
+<!-- 			 파라미터는 VO 형식으로 따로 받는거 보다 map으로 합쳐서 받는 것이 좀더 편함 ... -->
 		 	SELECT*
 		 		FROM
 				( 
@@ -18,29 +25,28 @@
 					,B.USER_NM AS MOD_ID 
 				FROM
 				(
-				SELECT * FROM BOARD C 
+				SELECT * FROM BOARD C
 			<if test="searchWord !=null and searchWord !='' ">
 				<choose>
-					<when test="searchKey==TITLE">
-						WHERE TITLE LIKE #{SearchWord} ORDER BY SEQ DESC) A 
+					<when test="searchKey == 'TITLE'">
+						WHERE TITLE LIKE #{searchWord}
 					</when>
-					<when test="searchKey==REG_ID">
-						WHERE REG_ID LIKE #{SearchWord} ORDER BY SEQ DESC) A 
+					<when test="searchKey == 'REG_ID'">
+						WHERE REG_ID LIKE #{searchWord}
 					</when>
 				</choose>
 			</if>
-			<if test="searchWord !=null and searchWord !='' ">
 				ORDER BY SEQ DESC) A
-			</if>
 				LEFT
 				JOIN CM_USER B 
 				ON B.USER_ID = A.MOD_ID )
 				WHERE RNUM BETWEEN #{startRow} and #{endRow}
 	</select>
 	
-<!-- 	<select id="getTotalRows" resultType="Integer" parameterType="co.kr.ucs.spring.vo.SearchVO" > -->
+	<select id="getTotalRows" resultType="Integer" parameterType="java.util.HashMap">
 					<!-- 위와같이 해서 VO값을 받아서 넣고싶은데 자꾸 오류가남 위와같으 받으려면 어떻게 해야 할까요?? -->
-	 <select id="getTotalRows" resultType="Integer" parameterType="hashmap" >
+					<!-- 내 생각으로는 위와같이 서치타입의 VO와 같으면 mybatis에서도 searchvo에 맞게끔 설정해주면 될것 같음.. 그러나 안됨. -->
+<!-- 	 <select id="getTotalRows" resultType="Integer" parameterType="HashMap" > -->
 		 	SELECT COUNT(*) TOTALROWS
 		 		FROM
 				( 
@@ -56,19 +62,29 @@
 				FROM
 				(
 				SELECT * FROM BOARD C 
-			<if test="searchWord !=null and searchWord !='' ">
-				<choose>
-					<when test="searchKey == TITLE">
-						WHERE TITLE LIKE #{searchWord} ORDER BY SEQ DESC) A 
-					</when>
-					<when test="searchKey == REG_ID">
-						WHERE REG_ID LIKE #{searchWord} ORDER BY SEQ DESC) A 
-					</when>
-				</choose>
-			</if>
-			<if test="searchWord !=null and searchWord !='' ">
+<!-- 			<if test="searchWord == null and searchWord == '' "> -->
+<!-- 				<choose> -->
+<!-- 					<when test="searchKey == 'TITLE'"> -->
+<!-- 						WHERE TITLE LIKE '%${searchWord}%'  -->
+<!-- 					</when> -->
+<!-- 					<when test="searchKey == 'MOD_ID'"> -->
+<!-- 						WHERE MOD_ID LIKE '%${searchWord}%'  -->
+<!-- 					</when> -->
+<!-- 				</choose> -->
+<!-- 			</if> -->
+				<if test="searchWord !=null and searchWord !='' ">
+					<choose>
+						<when test="searchKey == 'TITLE'">
+							WHERE TITLE LIKE #{searchWord}
+						</when>
+						<when test="searchKey == 'REG_ID'">
+							WHERE REG_ID LIKE #{searchWord}
+						</when>
+					</choose>
+				</if>
+   
 				ORDER BY SEQ DESC) A
-			</if>
+   
 				LEFT
 				JOIN CM_USER B 
 				ON B.USER_ID = A.MOD_ID )
