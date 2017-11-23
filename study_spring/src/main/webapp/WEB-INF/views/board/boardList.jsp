@@ -73,14 +73,15 @@ $(document).ready(function() {
 		var param = {
 	
 			'searchKey'  : $("#searchKey").val(),
-			'searchWord' : $("#searchWord").val(),
+			'searchWord' : "%"+$("#searchWord").val()+"%",
 			'cpage'   : cPage
 		}
 	
 		$.ajax({
 			url : "/board/boardList.do" ,
-			data:  param,
+			data:  JSON.stringify(param),
 			dataType : "json",
+			contentType :"application/json",
 			type : "POST",
 			success : function(data) {
 	              console.log(data)

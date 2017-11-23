@@ -47,18 +47,20 @@ public class BoardController {
 	@ResponseBody
 //	public HashMap<String, Object> boardList(Locale locale, Model model, @RequestBody HashMap<String, Object> param) throws Exception{
 //	파라미터를 파람으로 싹다 받아서 넘기고 싶은데 Content type 'application/x-www-form-urlencoded;charset=UTF-8' not supported 오류....
-	public HashMap<String, Object> boardList(Locale locale, Model model, HashMap<String, Object> param,
-			@RequestParam("cpage")int cPage,
-			@RequestParam("searchKey")String searchKey,
-			@RequestParam("searchWord")String searchWord) throws Exception{
-		
-		
+//	public HashMap<String, Object> boardList(Locale locale, Model model, HashMap<String, Object> param,
+//			@RequestParam("cpage")int cPage,
+//			@RequestParam("searchKey")String searchKey,
+//			@RequestParam("searchWord")String searchWord) throws Exception{
+	public HashMap<String, Object> boardList(Locale locale, Model model, @RequestBody HashMap<String, Object> param
+			) throws Exception{
+		logger.info("boardList.dododododod");
+		int cPage =(int) param.get("cpage");
 		int pageBlock = 10;
 		int startRow  = (cPage - 1) * pageBlock + 1;
 		int endRow    = startRow  + pageBlock - 1;
 		
-		param.put("searchKey", searchKey);
-		param.put("searchWord", "%" +searchWord+ "%");
+//		param.put("searchKey", searchKey);
+//		param.put("searchWord", "%" +searchWord+ "%");
 		param.put("startRow", startRow);
 		param.put("endRow", endRow);
 		

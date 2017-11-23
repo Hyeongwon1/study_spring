@@ -27,7 +27,6 @@ public class BoardDao {
 //		map.put("searchKey" ,              searchVo.getSearchKey());
 //        map.put("startRow"  ,               startRow);
 //		map.put("endRow"    ,                 endRow);
-		System.out.println("paraml;ll;l;l;l;l;"+param);
 //		
 		return sqlSession.selectList("board.boardList", param);
 	}

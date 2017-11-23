@@ -129,6 +129,23 @@
 		    <scope>runtime</scope>
 		</dependency>
 		
+		<!-- https://mvnrepository.com/artifact/org.logback-extensions/logback-ext-spring -->
+		<dependency>
+		    <groupId>org.logback-extensions</groupId>
+		    <artifactId>logback-ext-spring</artifactId>
+		    <version>0.1.4</version>
+		</dependency>
+		
+		<!-- https://mvnrepository.com/artifact/org.bgee.log4jdbc-log4j2/log4jdbc-log4j2-jdbc4 -->
+		<!-- 로그쿼리정렬 -->
+		<dependency>
+		    <groupId>org.bgee.log4jdbc-log4j2</groupId>
+		    <artifactId>log4jdbc-log4j2-jdbc4</artifactId>
+		    <version>1.16</version>
+		</dependency>
+		
+		
+		
 		<!-- https://mvnrepository.com/artifact/org.slf4j/jcl-over-slf4j -->
 		<dependency>
 		    <groupId>org.slf4j</groupId>
