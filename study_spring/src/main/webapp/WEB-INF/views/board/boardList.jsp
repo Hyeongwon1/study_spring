@@ -3,57 +3,38 @@
 <%@ page import="java.util.List"%>
 <%@ page import="java.util.ArrayList"%>
 <%@ page import="java.util.HashMap"%>
-
 <%
-//response.setHeader("Content-Type", "application/xml");
-//response.setContentType("text/xml;charset=UTF-8");
+String cp = request.getContextPath();
 response.setCharacterEncoding("UTF-8");
-
-// 	List<BoardBean> boardList = (List<BoardBean>)request.getAttribute("list");
-// 	SearchBean searchBean = (SearchBean)request.getAttribute("SearchBean");
-// 	int totalRows = (Integer)request.getAttribute("totalRows");
-// 	String searchKey = searchBean.getSearchKey();
-// 	String searchWord = searchBean.getSearchWord();
-// 	int cPage =searchBean.getCpage();
-
-
-// 	int pageBlock = 10; // 페이지 블럭 개수
-//    	int pageGroup ; //pageGroup
-// 	int startRow = (cPage - 1) * pageBlock + 1;// 1,11,21,31... 리스트 블럭 시작
-// 	int endRow = startRow + pageBlock - 1;// 10,20,30,40... 리스트 블럭 끝	
-// 	int totalPages; 		// 전체페이지
-	
-// 	boolean firstGo;	//첫페이지레이어 노출여부(true, false)
-// 	boolean lastGo;		//마지막페이지레이어 노출여부(true, false)
-// 	boolean nextGo;		//다음페이지레이어 노출여부(true, false)
-// 	boolean prevGo;		//이전페이지레이어 노출여부(true, false)
-	
-// 	int firstPage;		//첫페이지 번호 : 무조건1
-// 	int nextPage;		//다음페이지 번호
-// 	int prevPage;		//이전페이지 번호
-// 	int lastPage;		//마지막페이지 번호 : totalpage와 동일
-	
-	
 %>    
+
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <title>SELECT PAGE</title>
+<link href="<%=cp%>/resources/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 <style>
+.inputfield{
+
+height:22px
+
+}
+
 /* 기본 설정*/
- u{text-decoration:none; color:#000000;}	
- u:hover{color:#ff0000; cursor: pointer;} 
- strong{color:#ff0000; cursor: pointer; font:bold 15px Dotum;} 
- /* nav tag */ 
- .pg li{display:inline; /* 세로나열을 가로나열로 변경 */ 
-			border-left:1px solid #999; /* 각 메뉴의 왼쪽에 "|" 표시(분류 표시) */ 
-			 font:bold 12px Dotum; /* 폰트 설정 - 12px의 돋움체 굵은 글씨로 표시 */ 
-			 padding:0 10px; /* 각 메뉴 간격 */ 
- 			} 
-.pg li:first-child{border-left:none;} /* 메뉴 분류중 제일 왼쪽의 "|"는 삭제
+/*  u{text-decoration:none; color:#000000;}	 */
+/*  u:hover{color:#ff0000; cursor: pointer;}  */
+/*  strong{color:#ff0000; cursor: pointer; font:bold 15px Dotum;}  */
+/*  /* nav tag */  */
+/*  .pg li{display:inline; /* 세로나열을 가로나열로 변경 */  */
+/* 			border-left:1px solid #999; /* 각 메뉴의 왼쪽에 "|" 표시(분류 표시) */  */
+/* 			 font:bold 12px Dotum; /* 폰트 설정 - 12px의 돋움체 굵은 글씨로 표시 */  */
+/* 			 padding:0 10px; /* 각 메뉴 간격 */  */
+/*  			}  */
+/* .pg li:first-child{border-left:none;} /* 메뉴 분류중 제일 왼쪽의 "|"는 삭제 */
 </style>
 <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="<%=cp%>/resources/bootstrap/js/bootstrap.min.js"></script>
 <script type="text/javascript">
 $(document).ready(function() {
 	
@@ -63,10 +44,12 @@ $(document).ready(function() {
 	})
 
 });	
+
 	
 	function search(cPage) {
 		console.log(cPage)
 		var cPage ;
+		
 		console.log(cPage)
 		console.log($("#searchKey").val())
 		console.log($("#searchWord").val())
@@ -74,7 +57,7 @@ $(document).ready(function() {
 	
 			'searchKey'  : $("#searchKey").val(),
 			'searchWord' : "%"+$("#searchWord").val()+"%",
-			'cpage'   : cPage
+			'cpage'   :  cPage
 		}
 	
 		$.ajax({
@@ -110,7 +93,6 @@ function listfn(data) {
 	$.each(data, function(index, item) {
 		console.log(item)
 		
-
 		$('#list').append(
 				"<tr><td>"
 				+ item.seq 
@@ -128,8 +110,8 @@ function listfn(data) {
 	})
 }
 
-
 function pagerfn(data,cppage) {
+	
 	$('#pager').empty();
 	//var totalRows = data
 	
@@ -178,27 +160,52 @@ function pagerfn(data,cppage) {
 //   	var endRow = (cPageGroup < pageGroup) ? startRow + pageBlock - 1 : totalPages; // 페이지 리스트 마지막 배열값
 	console.log("startRow"+startRow)   
  	console.log("endRow:"+endRow)
+			var navigation_html="";
 		if(firstGo == true){ 
-			$('#pager').append("<li onclick='search(" + firstPage + ")'>"+"<u>"+ "처음" +"</u>"  + "</li>")
+			navigation_html += '<li class="">'; 
+		    navigation_html += '<a href="javascript:search(' + firstPage +')">'+ "처음" +'</a>'; 
+		   	navigation_html += '</li>';
+// 			$('#pager').append("<li onclick='search(" + firstPage + ")'>"+"<u>"+ "처음" +"</u>"  + "</li>")
 		}
 		if(prevGo == true){ 
-			$('#pager').append("<li onclick='search(" + prevPage + ")'>"+"<u>"+ "이전" +"</u>"  + "</li>")
+			navigation_html += '<li class="">'; 
+		    navigation_html += '<a href="javascript:search(' + prevPage +')">'+ "이전" +'</a>'; 
+		   	navigation_html += '</li>';
+// 			$('#pager').append("<li onclick='search(" + prevPage + ")'>"+"<u>"+ "이전" +"</u>"  + "</li>")
 		}
 		for(var i = startRow ; i<= endRow ; i++){
 			if (i==cPage) {
-			$('#pager').append("<li onclick='search(" + i + ")'>"+"<u>"+ "<strong>"+ i+ "</strong>"+"</u>"  + "</li>")
+				navigation_html += '<li class="active" id="id' + i +'">';  
+			    navigation_html += '<a href="javascript:search(' + i +')" longdesc="' + i +'">'+ i +'</a>';
+			   	navigation_html += '</li>';
+// 			$('#pager').append("<li onclick='search(" + i + ")'>"+"<u>"+ "<strong>"+ i+ "</strong>"+"</u>"  + "</li>")
 			}else{ 
-			$('#pager').append("<li onclick='search(" + i + ")'>"+"<u>"+ i +"</u>"  + "</li>")
+				navigation_html += '<li class= >';  
+			    navigation_html += '<a href="javascript:search(' + i +')" longdesc="' + i +'">'+ i +'</a>';
+			   	navigation_html += '</li>';
+<%-- 			page_html += "<li><a onclick='search(<%= "#" %>{i})'></a></li>"; --%>  //#을 사용 하니  제스퍼 관련 오류가 나서 컴파일 되지 않는다고 떳음  , 스크립트릿으로 감싸서 활용하니 오류는 사라졌음. 하지만 펑션이 호출된것은 아님/.
+<%-- 			page_html = page_html.replace(/<%= "#" %>{i}/gi, '"' + i + '"'); --%>  //변수값이 변수로 안들어가고 그냥 변수 명으로 들어가나 싶어서 리플레이스 해서 넣어줘 봤음 .
+// 			$('#pager').append("<a onclick='search(" + i + ")'>"+"<u>"+ i +"</u>"  + "</a>") //온클릭에다 펑션을 호출했을시  타입에러 났었음.. href에다 하니까 됨.. 자세한 이유는 찾아 봐야 할듯..
 			}
 		} 
 		if(nextGo == true ){
-			$('#pager').append("<li onclick='search(" + nextPage + ")'>"+"<u>"+ "다음" +"</u>"  + "</li>")
+			navigation_html += '<li class="">'; 
+		    navigation_html += '<a href="javascript:search(' + nextPage +')">'+ "다음" +'</a>'; 
+		   	navigation_html += '</li>';
+// 			$('#pager').append("<li onclick='search(" + nextPage + ")'>"+"<u>"+ "다음" +"</u>"  + "</li>")
 		}
 		if(lastGo == true ){
-			$('#pager').append("<li onclick='search(" + lastPage + ")'>"+"<u>"+ "마지막" +"</u>"  + "</li>")
+			navigation_html += '<li >'; 
+		    navigation_html += '<a href="javascript:search(' + lastPage +')">'+ "마지막" +'</a>'; 
+		   	navigation_html += '</li>';
+// 			$('#pager').append("<li onclick='search(" + lastPage + ")'>"+"<u>"+ "마지막" +"</u>"  + "</li>")
 		}
-	
+
+		    $('#pager').html(navigation_html); //부트스트랩으로 활용하니 css에서 적용한  커서 포인터 등등이 필요 없어짐.
 }
+
+
+
 
 function fn_logout() {
 	
@@ -213,38 +220,45 @@ function fn_logout() {
 	<header align="center">
 		<h1>SELECT PAGE</h1>
 	</header>
-
-	<section>
-	<div align="center"><button type="button" id="logout" onclick="fn_logout();" >로그아웃</button></div>
-			<table  border="1" align="center">
-				<tr>
-					<td colspan="5">
-						<select name="searchKey" id="searchKey">
-							<option value="TITLE">제목</option>
-							<option value="MOD_ID">아이디</option>
-						</select> 
-						<input type="text" name="searchWord" id="searchWord" value="" />
-						<button id="searchbtn" value="검색" >검색</button>
-						<button type="button"  onclick="location.href='/board/boardWrite.do'">글쓰기</button>
-					</td>
-				</tr>
+		<div class="container">
+			
+			<button class="btn btn-xs pull-right" id="logout"  onclick="fn_logout();" >로그아웃</button>
+			<table class="">
+					<tr>
+						<td colspan="5">
+							<select class="inputfield" name="searchKey" id="searchKey">
+								<option value="TITLE">제목</option>
+								<option value="MOD_ID">아이디</option>
+							</select>
+							<input class="inputfield" type="text" name="searchWord" id="searchWord" value="" />
+							<button id="searchbtn" class="btn btn-success btn-xs" value="검색" >검색</button>
+						</td>
+					</tr>
 			</table>
-		<table style="table-layout:fixed" border="1" align="center">
-				<tr>
-					<th>글번호</th>
-					<th width="200">제목</th>
-					<th>작성자ID</th>
-					<th>작성자이름</th>
-					<th>작성일</th>
-				</tr>
-			<tbody id="list">
+		</div>
+		<br>
+		<div class="container">
+				<table class="table table-hover">
+						<tr>
+							<th>글번호</th>
+							<th width="200">제목</th>
+							<th>작성자ID</th>
+							<th>작성자이름</th>
+							<th>작성일</th>
+						</tr>
+					<tbody id="list">
+					
+					</tbody>
+				</table>
+			<hr>
+					
+			<button type="button"  class="btn btn-primary active btn-sm pull-right"  onclick="location.href='/board/boardWrite.do'">글쓰기</button>
 			
-			</tbody>
-			
-		</table>
-
-	</section>
-	<div id ="pager" class="pg" align="center"></div>
+			<div id="" class="text-center">
+				<ul id="pager" class="pagination pagination-sm">
+				</ul>
+			</div>
+		</div>
 
 </body>
 </html>
