@@ -91,7 +91,27 @@ function listfn(data) {
 	
 	$('#list').empty();
 	$.each(data, function(index, item) {
-		console.log(item)
+// 		console.log(item.reg_date)
+// 		var mdate = item.reg_date
+// 		var mdate2 = new Date(mdate);
+// 		var mdate3 = mdate2.getFullYear() + "-"
+// 				+ Number(mdate2.getMonth() + 1) + "-"
+// 				+ mdate2.getDate();
+		
+// 		// GET CURRENT DATE
+// 		var date = new Date(mdate);
+		 
+// 		// GET YYYY, MM AND DD FROM THE DATE OBJECT
+// 		var yyyy = date.getFullYear().toString();
+// 		var mm = (date.getMonth()+1).toString();
+// 		var dd  = date.getDate().toString();
+		 
+// 		// CONVERT mm AND dd INTO chars
+// 		var mmChars = mm.split('');
+// 		var ddChars = dd.split('');
+		 
+// 		// CONCAT THE STRINGS IN YYYY-MM-DD FORMAT
+// 		var datestring = yyyy + '-' + (mmChars[1]?mm:"0"+mmChars[0]) + '-' + (ddChars[1]?dd:"0"+ddChars[0]);
 		
 		$('#list').append(
 				"<tr><td>"
@@ -184,7 +204,7 @@ function pagerfn(data,cppage) {
 			    navigation_html += '<a href="javascript:search(' + i +')" longdesc="' + i +'">'+ i +'</a>';
 			   	navigation_html += '</li>';
 <%-- 			page_html += "<li><a onclick='search(<%= "#" %>{i})'></a></li>"; --%>  //#을 사용 하니  제스퍼 관련 오류가 나서 컴파일 되지 않는다고 떳음  , 스크립트릿으로 감싸서 활용하니 오류는 사라졌음. 하지만 펑션이 호출된것은 아님/.
-<%-- 			page_html = page_html.replace(/<%= "#" %>{i}/gi, '"' + i + '"'); --%>  //변수값이 변수로 안들어가고 그냥 변수 명으로 들어가나 싶어서 리플레이스 해서 넣어줘 봤음 .
+<%-- 			page_html = page_html.replace(/<%= "#" %>{i}/gi, '"' + i + '"'); --%>  //변수값이 변수로 안들어가고 그냥 변수 명으로 들어가나 싶어서 리플레이스 해서 넣어줘 봤음 . 
 // 			$('#pager').append("<a onclick='search(" + i + ")'>"+"<u>"+ i +"</u>"  + "</a>") //온클릭에다 펑션을 호출했을시  타입에러 났었음.. href에다 하니까 됨.. 자세한 이유는 찾아 봐야 할듯..
 			}
 		} 
@@ -201,7 +221,7 @@ function pagerfn(data,cppage) {
 // 			$('#pager').append("<li onclick='search(" + lastPage + ")'>"+"<u>"+ "마지막" +"</u>"  + "</li>")
 		}
 
-		    $('#pager').html(navigation_html); //부트스트랩으로 활용하니 css에서 적용한  커서 포인터 등등이 필요 없어짐.
+		    $('#pager').append(navigation_html); //부트스트랩으로 활용하니 css에서 적용한  커서 포인터 등등이 필요 없어짐.
 }
 
 

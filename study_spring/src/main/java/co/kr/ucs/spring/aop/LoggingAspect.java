@@ -22,12 +22,12 @@ public class LoggingAspect {
             name = "Controller  \t:::::::::::::  ";
         }
         else if (type.indexOf("Service") > -1) {
-            name = "ServiceImpl  \t::::::::::::  ";
+            name = "Service  \t::::::::::::  ";
         }
         else if (type.indexOf("DAO") > -1) {
             name = "DAO  \t\t:::::::::::";
         }
-        logger.debug(name + type + "." + joinPoint.getSignature().getName() + "()");
+        //logger.debug(name + type + "." + joinPoint.getSignature().getName() + "()");
         return joinPoint.proceed();
     }
 

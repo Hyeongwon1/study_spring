@@ -33,10 +33,6 @@ $(document).ready(function(){
 			    	
 			    	alert("실패");
 					
-				}else if(data.success == 7){
-					
-					alert("세션나감")
-					location.href = "/sign/signIn.do";
 				}
 		    },
 		    error: function (errorThrown)

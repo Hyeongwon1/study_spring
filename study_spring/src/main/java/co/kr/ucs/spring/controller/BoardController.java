@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import co.kr.ucs.spring.service.BoardService;
 import co.kr.ucs.spring.vo.BoardVO;
-import co.kr.ucs.spring.vo.SearchVO;
+
 
 /**
  * Handles requests for the application home page.
@@ -38,7 +38,6 @@ public class BoardController {
 	
 	@RequestMapping(value = "/board/boardListf.do", method = RequestMethod.GET)
 	public String boardListfirst(Locale locale, Model model) throws Exception{
-		logger.info("boardListf");
 		
 		return "board/boardList";
 	}
@@ -53,7 +52,6 @@ public class BoardController {
 //			@RequestParam("searchWord")String searchWord) throws Exception{
 	public HashMap<String, Object> boardList(Locale locale, Model model, @RequestBody HashMap<String, Object> param
 			) throws Exception{
-		logger.info("boardList.dododododod");
 		int cPage =(int) param.get("cpage");
 		int pageBlock = 10;
 		int startRow  = (cPage - 1) * pageBlock + 1;
@@ -67,13 +65,13 @@ public class BoardController {
 		List<HashMap<String, Object>> list	= boardService.BoardList(param);
 		int totalRows		= boardService.getTotalRows(param);
 		
-		System.out.println("totalRows:"+totalRows);
+//		System.out.println("totalRows:"+totalRows);
 		
 		
 		HashMap<String, Object> map = new HashMap<String, Object>();
 		map.put("list", list);
 		map.put("totalRows", totalRows);
-		System.out.println("cpage:"+cPage);
+//		System.out.println("cpage:"+cPage);
 		map.put("cPage", cPage);
 		
 

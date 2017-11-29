@@ -11,42 +11,57 @@
 
 <!-- 				동적쿼리 작동시 오류는  비교문자열에 ''을 안쳐준것.. 그리고 조건문을 중복해서 사용한것...그게 끝.. -->
 <!-- 			 파라미터는 VO 형식으로 따로 받는거 보다 map으로 합쳐서 받는 것이 좀더 편함 ... -->
-		 	SELECT*
+		 	
+		 	SELECT X.RNUM,X.SEQ,X.TITLE,X.CONTENTS,X.REG_ID,to_char(X.REG_DATE, 'YYYY-MM-DD HH24:MI:SS') as REG_DATE,X.MOD_DATE,B.USER_NM AS MOD_ID
 		 		FROM
 				( 
-				SELECT 
-					ROWNUM RNUM 
-					,SEQ
-					,TITLE
-					,CONTENTS
-					,REG_ID 
-					,REG_DATE
-					,MOD_DATE
-					,B.USER_NM AS MOD_ID 
-				FROM
-				(
-				SELECT * FROM BOARD C
-			<if test="searchWord !=null and searchWord !='' ">
+					SELECT 
+						ROWNUM RNUM 
+						,A.SEQ
+						,A.TITLE
+						,A.CONTENTS
+						,A.REG_ID 
+						,A.REG_DATE
+						,A.MOD_DATE
+						,A.MOD_ID 
+					FROM
+					(
+						SELECT 
+						 ROWNUM RNUM 
+							,SEQ
+							,TITLE
+							,CONTENTS
+							,REG_ID 
+							,REG_DATE
+							,MOD_DATE
+							,MOD_ID
+								FROM BOARD 
+			<if test="searchWord !=null and searchWord !='%%' ">
 				<choose>
 					<when test="searchKey == 'TITLE'">
-						WHERE TITLE LIKE #{searchWord}
+						WHERE A.TITLE LIKE #{searchWord}
 					</when>
 					<when test="searchKey == 'REG_ID'">
-						WHERE REG_ID LIKE #{searchWord}
+						WHERE A.REG_ID LIKE #{searchWord}
 					</when>
 				</choose>
 			</if>
 				ORDER BY SEQ DESC) A
+				
+				WHERE ROWNUM <![CDATA[ <= ]]> #{endRow}) X
+				
 				LEFT
 				JOIN CM_USER B 
-				ON B.USER_ID = A.MOD_ID )
-				WHERE RNUM BETWEEN #{startRow} and #{endRow}
+				ON B.USER_ID = X.MOD_ID 
+				
+				WHERE X.RNUM >=#{startRow}
 	</select>
 	
 	<select id="getTotalRows" resultType="Integer" parameterType="java.util.HashMap">
 					<!-- 위와같이 해서 VO값을 받아서 넣고싶은데 자꾸 오류가남 위와같으 받으려면 어떻게 해야 할까요?? -->
 					<!-- 내 생각으로는 위와같이 서치타입의 VO와 같으면 mybatis에서도 searchvo에 맞게끔 설정해주면 될것 같음.. 그러나 안됨. -->
 <!-- 	 <select id="getTotalRows" resultType="Integer" parameterType="HashMap" > -->
+		 	
 		 	SELECT COUNT(*) TOTALROWS
 		 		FROM
 				( 
@@ -72,7 +87,7 @@
 <!-- 					</when> -->
 <!-- 				</choose> -->
 <!-- 			</if> -->
-				<if test="searchWord !=null and searchWord !='' ">
+				<if test="searchWord !=null and searchWord !='%%' ">
 					<choose>
 						<when test="searchKey == 'TITLE'">
 							WHERE TITLE LIKE #{searchWord}
