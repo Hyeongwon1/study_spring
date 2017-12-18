@@ -1,0 +1,58 @@
+study_spring
+============
+
+스프링스터디
+#### web.xml
+-------
+~~~
+<!--  servlet filter들에 의해 공유되는 Root Spring Contariner를 정의 -->
+      <context-param>
+          <param-name>contextConfigLocation</param-name>
+          <param-value>/WEB-INF/spring/root-context.xml</param-value>
+      </context-param>
+
+      <context-param>
+          <param-name>logbackConfigLocation</param-name>
+          <param-value>classpath:config/logback.xml</param-value>
+      </context-param>
+	
+<!-- servlet filter들에 의해 공유되는 Root Spring Contariner를 생성   -->
+      <listener>
+          <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+      </listener>
+      <listener>
+           <listener-class>ch.qos.logback.ext.spring.web.LogbackConfigListener</listener-class>
+      </listener>
+~~~
+param-value에 xml경로를 지정 해서 셋팅 해줄수 있음.  
+공통 빈 설정.  
+사용하고자하는 리스너를 셋팅.  
+
+~~~
+<!-- Processes application requests -->
+	<servlet>
+		<servlet-name>appServlet</servlet-name>
+		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+		<init-param>
+			<param-name>contextConfigLocation</param-name>
+			<param-value>/WEB-INF/spring/appServlet/servlet-context.xml</param-value>
+		</init-param>
+		<load-on-startup>1</load-on-startup>
+	</servlet>
+		
+	<servlet-mapping>
+		<servlet-name>appServlet</servlet-name>
+		<url-pattern>/</url-pattern>
+	</servlet-mapping>
+  ~~~
+  
+  spring 의 서블렛 기본설정  
+  클라이언트의 request 요청이들어오면 요청을 처리할 곳으로 넘겨주고  
+  서버쪽의 response를 클라이언트에 넘겨주는곳을 셋팅하는 것
+  
+  init-param 에서 DispatcherServlet 역할을 할 xml의 경로를 셋팅  
+  load-on-startup 서블렛이 여러개일 경우 우선순위를 지정해주는 것  
+  servlet-mapping에서 받을 url패턴을 설정해주면 그와같은 패턴으로만 요청하고 받을 수 있음  
+  
+  
+
